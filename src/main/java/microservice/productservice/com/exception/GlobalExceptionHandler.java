@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
@@ -25,14 +24,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(e.getStatusCode()).body(ApiResponse.<String>builder()
                 .data(null)
                 .message(e.getReason())
-                .build());
-    }
-
-    @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity<ApiResponse<String>> exception(HttpClientErrorException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiResponse.<String>builder()
-                .data(null)
-                .message("Wrong request to authentication-service")
                 .build());
     }
 }
