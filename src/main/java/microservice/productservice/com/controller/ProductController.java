@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api-products")
 public class ProductController {
 
     private final ProductService productService;
@@ -20,7 +20,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<ApiResponse<ProductResponse>> createProduct(@RequestBody ProductRequest productRequest) {
         ProductResponse productResponse = productService.createProduct(productRequest);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.<ProductResponse>builder()
@@ -29,7 +29,7 @@ public class ProductController {
                 .build());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ApiResponse<ProductResponse>> updateProduct(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
         ProductResponse productResponse = productService.updateProduct(productRequest, id);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.<ProductResponse>builder()
@@ -38,7 +38,7 @@ public class ProductController {
                 .build());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/show/{id}")
     public ResponseEntity<ApiResponse<ProductResponse>> getProduct(@PathVariable Long id) {
         ProductResponse productResponse = productService.getProduct(id);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.<ProductResponse>builder()
@@ -47,7 +47,7 @@ public class ProductController {
                 .build());
     }
 
-    @GetMapping
+    @GetMapping("show-all")
     public ResponseEntity<ApiResponse<List<ProductResponse>>> getAllProducts() {
         List<ProductResponse> productResponses = productService.getAllProducts();
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.<List<ProductResponse>>builder()
@@ -56,7 +56,7 @@ public class ProductController {
                 .build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.<String>builder()
