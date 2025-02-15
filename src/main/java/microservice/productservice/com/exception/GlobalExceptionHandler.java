@@ -26,4 +26,12 @@ public class GlobalExceptionHandler {
                 .message(e.getReason())
                 .build());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<String>> exception(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.<String>builder()
+                .data(null)
+                .message(e.getMessage())
+                .build());
+    }
 }
